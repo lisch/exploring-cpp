@@ -1,3 +1,3 @@
 # Define the book parameters.
-ISBN := 7494
-DRAFT:= ar
+ISBN := 9781430261933_
+DRAFT:=
