@@ -1,0 +1,5 @@
+class rational
+{
+public:
+  class zero_denominator {};
+};

@@ -1,0 +1,4 @@
+int numerator;
+int denominator;
+
+rational(int n, int d) : numerator(n), denominator(d) {}

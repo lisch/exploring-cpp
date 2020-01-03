@@ -1,0 +1,8 @@
+#include <iostream>
+#include <ostream>
+
+struct point
+{
+  double x_;
+  double y_;
+};

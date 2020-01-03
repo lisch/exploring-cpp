@@ -1,0 +1,7 @@
+struct rational {
+  rational& operator *=(rational const&);
+  void reduce() {}
+  int numerator_, denominator_;
+  int numerator() const { return numerator_; }
+  int denominator() const { return denominator_; }
+};

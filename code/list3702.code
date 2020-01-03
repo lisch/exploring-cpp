@@ -1,0 +1,8 @@
+std::istream& operator>>(std::istream& in, weight& w)
+{
+  int tmp;
+  if (in >> tmp)
+    w = tmp;
+  return in;
+}
+

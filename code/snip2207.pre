@@ -1,0 +1,6 @@
+#include <locale>
+char to_lower(char ch)
+{
+  return std::tolower(ch, std::locale());
+}
+

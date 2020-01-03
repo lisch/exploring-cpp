@@ -1,0 +1,2 @@
+int numerator(1), denominator(1);
+int gcd(int,int) { return 1; }

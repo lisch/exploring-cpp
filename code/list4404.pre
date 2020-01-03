@@ -1,0 +1,5 @@
+// Split a digit string into into integers, e.g., "123" -> { 1, 2, 3 }
+void split(std::vector<int>& v, std::string const& s)
+{
+  std::transform(s.begin(), s.end(), v.begin(), std::bind2nd(std::minus<int>(), int('0')));
+}

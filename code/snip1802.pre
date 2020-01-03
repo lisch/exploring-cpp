@@ -1,0 +1,4 @@
+using namespace std;
+locale native("");
+wchar_t ww(' '), *w(&ww);
+vector<wchar_t> copy;

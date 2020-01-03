@@ -1,0 +1,15 @@
+int main()
+{
+  typedef std::map<color, int, bool(*)(color const&, color const&)> colormap;
+  colormap colors(order_color);
+  color c;
+  int i;
+
+  while (std::cin >> c >> i)
+    colors[c] = i;
+
+  for (colormap::iterator i(colors.begin()); i != colors.end(); ++i)
+  {
+    std::cout << i->first << ' ' << i->second << '\n';
+  }
+}

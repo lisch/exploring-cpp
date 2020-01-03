@@ -1,0 +1,242 @@
+
+
+Matthew Moodie2006-08-04T16:17:00Matthew Moodie2006-08-04T16:21:00
+
+
+Exploration 13
+
+
+
+Maps
+
+Now that you understand the basics, it's time to start moving on to more
+exciting challenges. Let's write a real program, something non-trivial, but
+still simple enough to master this early in the book. Your job is to write a
+program that reads words from the standard input, and counts the frequency of
+each unique word. For the sake of simplicity, a word is a string of non-space
+characters, separated by whitespace. Thus, words end up including punctuation
+characters, but we'll worry about fixing that problem later.
+Right now, the book has not covered enough material for you to solve this
+problem with your current knowledge of C++, so just think about the problem and
+the tools you need to solve it. Write pseudo-code for the program. Try to write
+C++ code where you can, and make up whatever you need to tackle the problem.
+
+
+Using Maps
+
+The name of the exploration tells you what C++ feature will help provide an
+easy solution to this problem. What C++ calls a map, some languages and
+libraries call a dictionary or association. A map is just a data structure that
+stores pairs of keys and values, indexed by the key. In other words, it maps a
+key to a value. Within a map, keys are unique. Thus, the heart of the program
+is a map that stores strings as keys and number of occurrences as the
+associated value for each key.
+Naturally, your program needs the <map> header. The map datatype is called
+std::map. To declare a map, you need to specify the key type and the value
+type, in angle brackets, e.g.,
+
+  std::map<std::string, int> counts;
+
+You can use almost any type as the key and value types, even another map. As
+with vector, if you do not initialize a map, it starts out empty.
+The simplest way to use a map is to look up values using square brackets. For
+example, counts["the"] returns the value associated with the key "the". If the
+key is not present in the map, it is added with an initial value of zero. If
+the value type were std::string, the initial value would be an empty string.
+Armed with this knowledge, you can write the first part of the program,
+collecting the word counts, as shown in Listing 13-1.
+Listing 13-1. Counting occurrences of unique words
+
+  #include <iostream>
+  #include <istream>
+  #include <map>
+  #include <ostream>
+  #include <string>
+
+  int main()
+  {
+    std::map<std::string, int> counts;
+    std::string word;
+    while (std::cin >> word)
+      ++counts[word];
+    // TODO: Print the results.
+  }
+
+The ++ operator increments the count that is stored in counts. In other words,
+when counts[word] retrieves the associated value, it does so in a way that lets
+you modify the value. You can use it as a target for an assignment, or apply
+the increment or decrement operator.
+For example, suppose you wanted to reset a count to zero:
+
+  counts["something"] = 0;
+
+That was easy. Now all that's left to do is to print the results. Time to learn
+another C++ feature: iterators.
+
+
+Iterators
+
+The best way to get information out of a map is to use iterators. A map
+iterator refers to one element of the map, that is, one pair of a key and its
+associated value.
+The value of a map iterator is a pair object. It has two parts, named first and
+second. The first part is the key and the second part is the value. (They are
+not named key and value because the std::pair type is a generic part of the C++
+library. The library uses this type in several different places. Thus, the
+names of the parts of a pair are also generic, and not tied specifically to
+map.)
+As you know, the * operator dereferences an iterator, and so returns the pair
+object. Use a dot (.) operator to access a member of the pair. C++ has one
+twist, however: the dot operator has higher precedence than *, so the compiler
+thinks *iter.first means *(iter.first), which doesn't work. Instead, you must
+write (*iter).first to make sure the compiler dereferences the iterator before
+accessing the first member. Some programmers find that a little ugly and hard
+to read and prefer the shorthand iter->first. They mean the same thing; choose
+the style that you prefer, and stick with it.
+The next question is what to do with each pair. To keep things simple, print
+the output as the key, followed by a tab character, followed by the count, all
+on one line. Putting together all these pieces, you get Listing 13-2, the
+finished program.
+Listing 13-2. Printing word frequencies
+
+  #include <iostream>
+  #include <istream>
+  #include <map>
+  #include <ostream>
+  #include <string>
+
+  int main()
+  {
+    using namespace std;
+
+    map<string, int> counts;
+    string word;
+
+    // Read words from the standard input and count the number of times
+    // each word occurs.
+    while (cin >> word)
+      ++counts[word];
+
+    // For each word/count pair...
+    for (map<string,int>::iterator iter(counts.begin()); iter != counts.end();
+  ++iter)
+      // Print the word, tab, the count, newline.
+      cout << iter->first << '\t' << iter->second << '\n';
+  }
+
+Recall from Exploration 8 that using namespace std; is a shorthand that lets us
+drop the std:: prefix from standard library names.
+Using the knowledge you gained Exploration 8, you know how to format the output
+as two neat columns. All that is required is to find the size of the longest
+key. In order to right-align the counts, you can try to determine the number of
+places required by the largest count, or just use a very large number, such as
+10. Rewrite Listing 13-2 to line up the output neatly, according to the size of
+the longest key.
+Naturally, you will need to write another loop to visit all the elements of
+counts, and to test the size of each element. In Exploration 9, you learned
+that vector has a size() member function that returns the number of elements in
+the vector. Would you be surprised to learn that map and string also have size
+() member functions? The designers of the C++ library did their best to be
+consistent with names. The size() member function returns an integer of type
+size_type. (Remember size_type from Exploration 9? If not, go back and refresh
+your memory; Exploration 9 has some important admonitions about size_type.)
+Compare your program with Listing 13-3.
+Listing 13-3. Aligning words and counts neatly
+
+  #include <iomanip>
+  #include <iostream>
+  #include <istream>
+  #include <map>
+  #include <ostream>
+  #include <string>
+
+  int main()
+  {
+    using namespace std;
+
+    map<string, int> counts;
+    string word;
+
+    // Read words from the standard input and count the number of times
+    // each word occurs.
+    while (cin >> word)
+      ++counts[word];
+
+    // Determine the longest word.
+    string::size_type longest(0);
+    for (map<string,int>::iterator iter(counts.begin()); iter != counts.end();
+  ++iter)
+      if (iter->first.size() > longest)
+        longest = iter->first.size();
+
+    // For each word/count pair...
+    const int count_size(10); // Number of places for printing the count
+    for (map<string,int>::iterator iter(counts.begin()); iter != counts.end();
+  ++iter)
+      // Print the word, count, newline. Keep the columns neatly aligned.
+      cout << setw(longest)    << left  << iter->first <<
+              setw(count_size) << right << iter->second << '\n';
+  }
+
+Notice how the word is left-aligned and the count is right-aligned. We expect
+numbers to be right-aligned, and words look best left-aligned. (And remember
+const from Exploration 8? That simply means count_size is a constant.)
+
+
+Searching in Maps
+
+A map stores its data in sorted order by key. Searching in a map, therefore, is
+pretty fast (logarithmic time). Because a map keeps its keys in order, you can
+use any of the standard binary search algorithms (such as lower_bound, which
+you learned about in the previous exploration), but even better is to use map's
+member functions. These member functions have the same names as the standard
+algorithms, but take advantage of knowledge of a map's internal structure. The
+member functions also run in logarithmic time, but with less overhead than the
+standard algorithms.
+For example, suppose you want to know how many times the word "the" appears in
+an input stream. You can read the input and collect the counts in the usual
+way, then call lower_bound to see if "the" is in the map, and if so, get an
+iterator that points to its key/value pair. Then you can extract the count. You
+have all the knowledge and skills you need to solve this problem, so go ahead
+and write the program to print the number of occurrences of the word "the". The
+only trick is that the lower_bound member function does not take a pair of
+iterators as its first two arguments. It always searches the entire map, so its
+sole argument is the key to search for.
+The code that accompanies this book includes the contents of this chapter as a
+text file, explore13.txt. What count does your program print when you provide
+this file as the input? __________ I get 110 occurrences when I run the program
+in Listing 13-4.
+Listing 13-4. Searching for a word in a map
+
+  #include <iomanip>
+  #include <iostream>
+  #include <istream>
+  #include <map>
+  #include <ostream>
+  #include <string>
+
+  int main()
+  {
+    using namespace std;
+
+    map<string, int> counts;
+    string word;
+
+    // Read words from the standard input and count the number of times
+    // each word occurs.
+    while (cin >> word)
+      ++counts[word];
+
+    map<string,int>::iterator the(counts.lower_bound("the"));
+    if (the == counts.end())
+      cout << "\"the\": not found\n";
+    else if (the->second == 1)
+      cout << "\"the\": occurs " << the->second << " time\n";
+    else
+      cout << "\"the\": occurs " << the->second << " times\n";
+  }
+
+I don't know about you, but I find map<string,int>::iterator to be unwieldy.
+Throw in the std:: prefixes, and it becomes downright burdensome. Fortunately,
+C++ (like C) offers a way out: type synonyms, which just happens to be the
+subject of the next exploration.

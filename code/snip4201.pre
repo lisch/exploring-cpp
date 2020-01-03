@@ -1,0 +1,2 @@
+typedef int ReadIterator;
+typedef int WriteIterator;

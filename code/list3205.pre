@@ -1,0 +1,7 @@
+#define NDEBUG
+struct record
+{
+  int height_, weight_, bmi_;
+  char sex_;
+  std::string name_;
+

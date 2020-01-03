@@ -1,0 +1,28 @@
+class mammal
+{
+public:
+  mammal(std::string const& name) : name_(name) {}
+  std::string const& name() const { return name_; }
+  virtual void speak()
+  const
+  {
+    std::cout << "(silence)";
+  }
+private:
+  std::string name_;
+};
+
+class cat: public mammal
+{
+public:
+  cat(std::string const& name, bool awake = false) : mammal(name), awake_(awake) {}
+  bool awake() const { return awake_; }
+  bool asleep() const { return not awake(); }
+  virtual void speak()
+  const
+  {
+    std::cout << "purr";
+  }
+private:
+  bool awake_;
+};

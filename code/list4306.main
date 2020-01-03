@@ -1,0 +1,3 @@
+int n, d;
+while (std::cin >> n >> d)
+  rational r(n, d);
