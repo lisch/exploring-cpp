@@ -1,6 +1,0 @@
-struct rational
-{
-  rational& operator++();
-  void operator+=(int) {}
-  int numerator_, denominator_;
-};

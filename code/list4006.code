@@ -1,4 +1,0 @@
-std::cout << "\n{ ";
-std::copy(bmi_data.begin(), bmi_data.end(),
-          std::ostream_iterator<int>(std::cout, " "));
-std::cout << "}\n";

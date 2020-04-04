@@ -1,3 +1,0 @@
-#define NDEBUG
-struct rational {
-  int numerator, denominator;

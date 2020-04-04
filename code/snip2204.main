@@ -1,6 +1,0 @@
-  std::cout << '>';
-  print(42, 10);
-  std::cout << "<\n";
-  std::cout << '>';
-  print(42);
-  std::cout << "<\n";

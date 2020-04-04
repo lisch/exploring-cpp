@@ -1,2 +1,0 @@
-  int numerator, denominator;
-  void reduce() { }

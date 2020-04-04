@@ -1,4 +1,0 @@
-int gcd(int,int)
-{
-  return 1;
-}

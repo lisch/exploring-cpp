@@ -1,9 +1,0 @@
-struct rational
-{
-  rational& operator-=(int) { return *this; }
-  rational operator++(int);
-  rational operator--(int);
-  rational& operator+=(int) { return *this; }
-
-  int numerator_, denominator_;
-};

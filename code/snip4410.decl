@@ -1,8 +1,0 @@
-struct rational
-{
-  rational() {}
-  rational(int,int=1) {}
-  rational& operator +=(rational) { return *this; }
-};
-bool operator!=(rational,rational) { return 0; }
-void do_something(rational) {}

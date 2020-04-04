@@ -1,3 +1,0 @@
-private:
-  void reduce() {}
-  int numerator_, denominator_;

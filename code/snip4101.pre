@@ -1,2 +1,0 @@
-std::vector<int> data;
-typedef std::vector<int>::iterator intvec_iterator;

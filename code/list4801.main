@@ -1,3 +1,0 @@
-times_value<int,3> tv;
-int x = tv(4);
-std::cout << x << '\n';

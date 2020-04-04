@@ -1,6 +1,0 @@
-class string
-{
-public:
-  typedef int size_type;
-  static size_type const npos = -1;
-};

@@ -1,2 +1,0 @@
-  void move_polar(double, double) {}
-  void move_cartesian(double, double) {}

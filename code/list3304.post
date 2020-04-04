@@ -1,7 +1,0 @@
-int main()
-{
-  rational r;
-  rational s(1, 3);
-  r == s;
-}
-

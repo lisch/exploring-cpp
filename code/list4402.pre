@@ -1,9 +1,0 @@
-struct rational {
-  int numerator_, denominator_;
-  rational(int, int);
-  void reduce() {}
-  struct zero_denominator {
-    zero_denominator(char const*) {}
-  };
-  int init_denominator(int);
-};

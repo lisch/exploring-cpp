@@ -1,7 +1,0 @@
-/** @file list3101.func */
-/** Listing 31-1. Class declaration for a Cartesian point */
-struct point
-{
-  double x;
-  double y;
-};
