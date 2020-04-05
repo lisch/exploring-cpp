@@ -1,0 +1,8 @@
+add_executable(list0501 list0501.cpp)
+add_executable(list0502 list0502.cpp)
+add_executable(list0503 list0503.cpp)
+add_executable(list0504 list0504.cpp)
+run_test(list0501)
+run_test(list0502)
+run_test(list0503)
+run_test(list0504)

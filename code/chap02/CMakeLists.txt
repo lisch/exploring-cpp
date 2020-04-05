@@ -1,0 +1,10 @@
+add_executable(list0201 list0201.cpp)
+add_executable(list0202 list0202.cpp)
+target_compile_options(list0202 PUBLIC -Wno-comment)
+add_executable(list0203 list0203.cpp)
+add_executable(snip0203 snip0203.cpp)
+
+run_test(list0201)
+run_test(list0202)
+run_test(list0203)
+run_test(snip0203)

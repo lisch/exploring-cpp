@@ -1,0 +1,6 @@
+add_executable(list0901 list0901.cpp)
+add_executable(snip0901 snip0901.cpp)
+add_executable(snip0902 snip0902.cpp)
+run_test(list0901)
+run_test(snip0901)
+run_test(snip0902)

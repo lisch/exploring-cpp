@@ -1,0 +1,7 @@
+add_executable(list4001 list4001.cpp)
+add_executable(list4002 list4002.cpp)
+add_executable(list4003 list4003.cpp)
+add_executable(list4004 list4004.cpp)
+add_executable(snip4001 snip4001.cpp)
+add_executable(snip4002 snip4002.cpp)
+run_test(*)
