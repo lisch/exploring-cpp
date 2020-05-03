@@ -1,9 +1,7 @@
 #include <vector>
 int main() {
 using vi =
-#include "snip1101.cc"
+#include "snip1101.hh"
 ;
-std::vector<int> x;
-vi b{ x.begin() };
-return x.end() - b;
+return sizeof(vi) == 0;
 }

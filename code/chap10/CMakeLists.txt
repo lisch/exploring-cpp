@@ -1,2 +1,3 @@
-add_executable(list1001 list1001.cpp)
-run_test(list1001)
+example(list1001)
+example(list1002)
+example(list1003)

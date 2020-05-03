@@ -1,4 +1,4 @@
-#include <iostream>
 int main() {
-#include "snip4101.cc"
+#include "snip4101.hh"
+return x * y * z;
 }

@@ -1,1 +1,6 @@
-run_test(*)
+example(list1501)
+example(list1502)
+example(list1503)
+example(list1504)
+example(snip1501 snip1501.hh)
+example(snip1502 snip1502.hh)

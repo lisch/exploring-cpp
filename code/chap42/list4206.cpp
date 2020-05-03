@@ -1,4 +1,5 @@
-#include "list4206.cc"
+#include <iostream>
+#include "list4206.hh"
 int main() {
-#include "list4206.main"
+
 }

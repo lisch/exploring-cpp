@@ -2,6 +2,6 @@
 int main() {
 int x;
 int sum{};
-#include "snip1303.cc"
+#include "snip1303.hh"
 std::cout << sum << '\n';
 }

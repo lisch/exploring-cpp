@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
 int main() {
-#include "snip4002.cc"
+#include "snip4002.hh"
+std::cout << target << '\n';
 }

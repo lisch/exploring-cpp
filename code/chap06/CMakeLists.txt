@@ -1,2 +1,1 @@
-add_executable(list0601 list0601.cpp)
-run_test(*)
+add_executable(list0601-fixed list0601-fixed.cc)

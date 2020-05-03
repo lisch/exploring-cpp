@@ -1,4 +1,5 @@
-#include "list4205.cc"
+#include <iostream>
+#include "list4205.hh"
 int main() {
-#include "list4205.main"
+
 }

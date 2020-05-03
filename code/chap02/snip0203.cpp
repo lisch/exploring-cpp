@@ -1,6 +1,6 @@
 #include <iostream>
 int main()
 {
-#include "snip0203.cc"
+#include "snip0203.hh"
 std::cout << '\n';
 }

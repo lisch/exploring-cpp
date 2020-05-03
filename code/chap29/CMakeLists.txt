@@ -1,1 +1,1 @@
-run_test(*)
+add_executable(bmi bmi.cpp)

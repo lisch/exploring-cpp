@@ -1,9 +1,10 @@
-/** @file list1304.cc */
+/** @file list1304.cxx */
 /** Listing 13-4. Mystery Function */
-#include <algorithm>
 #include <cassert>
+#include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <ranges>
 #include <string>
 #include <vector>
 
@@ -14,15 +15,21 @@ int main()
   std::vector<int>::iterator i{}, p{};
   std::string s{};
 
-  std::copy(std::istream_iterator<int>(std::cin),
-            std::istream_iterator<int>(),
+  std::ranges::copy(std::ranges::istream_view<int>(std::cin),
             std::back_inserter(data));
-  for (i = data.begin();i != data.end(); ++i)
+  i = data.begin();
+
+  while (i != data.end())
   {
     v = *i;
     p = std::lower_bound(data.begin(), i, v);
-    i = data.erase(i);
-    data.insert(p, v);
+    if (i == p)
+      ++i;
+    else
+    {
+      i = data.erase(i);
+      data.insert(p, v);
+    }
   }
 
   s = " ";

@@ -1,4 +1,5 @@
-#include "list3601.cc"
+#include <cmath>
+#include "list3601.hh"
 int main() {
-#include "list3601.main"
+
 }

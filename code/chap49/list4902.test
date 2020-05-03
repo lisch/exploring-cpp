@@ -1,0 +1,6 @@
+#!/bin/sh
+
+name="${1:list4902}"
+source_dir="$2"
+build_dir="$3"
+"$build_dir/$name" 2>&1 | diff -u "$source_dir/$name.expected" -

@@ -1,0 +1,13 @@
+#!/bin/sh
+# Expect the program to fail.
+
+name=$1
+source_dir=$2
+build_dir=$3
+output=`$build_dir/$name 2>&1`
+if [ $? -eq 0 ]; then
+	echo "$name exited with success, but expected failure"
+	false
+else
+	echo "$output" | diff -u "$source_dir/list2701.txt" -
+fi

@@ -1,1 +1,5 @@
-run_test(*)
+example(list2201)
+example(list2202)
+example(list2203 list2203.hh)
+example(list2204)
+example(list2205 list2205.hh)

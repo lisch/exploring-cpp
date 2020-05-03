@@ -1,0 +1,1 @@
+list2701: /home/ray/writing/books/exploring-cpp-3ed/draft3/code/chap27/list2701.cpp:9: int main(): Assertion `a * b == c' failed.

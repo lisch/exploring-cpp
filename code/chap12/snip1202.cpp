@@ -1,4 +1,6 @@
+#include <format>
 #include <iostream>
 int main() {
-#include "snip1202.cc"
+bool a{true}, b{false};
+#include "snip1202.hh"
 }

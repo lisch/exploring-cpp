@@ -1,7 +1,5 @@
 #include <iostream>
-#include <string>
 int main() {
-#pragma GCC diagnostic ignored "-Wpedantic"
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#include "snip0402.cc"
+#include "snip0402.hh"
+std::cout << x << '\n';
 }
