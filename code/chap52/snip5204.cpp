@@ -1,5 +1,5 @@
 #include <vector>
 int main() {
 #include "snip5204.hh"
-  return matrix.size();
+  return matrix.size() != 0;
 }
