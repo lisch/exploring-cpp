@@ -1,9 +1,9 @@
 /** @file list4204.hh */
 /** Listing 42-4. Defining the rational Class In One Declaration In a Module */
-export module rat;
+// export module rat;
 #include <cassert>
-import <numeric>;
-export class rational
+#include <numeric>
+/*export*/ class rational
 {
 public:
   inline rational(int num) : numerator_{num}, denominator_{1} {}

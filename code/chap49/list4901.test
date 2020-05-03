@@ -1,6 +1,24 @@
-#!/bin/sh
+#!/usr/bin/env python3
 
-name="${1:list4902}"
-source_dir="$2"
-build_dir="$3"
-"$build_dir/$name" 2>&1 | diff -u "$source_dir/$name.expected" -
+import os, sys
+
+program, name, source_dir, build_dir = sys.argv
+
+from subprocess import Popen, PIPE
+p = Popen([os.path.join(build_dir, name)], stdout=PIPE, stderr=PIPE)
+stdout, stderr = p.communicate()
+
+output = (stdout + stderr).decode('utf-8')
+
+# Expect an exception.
+if p.returncode == 0:
+	print(output + "\nExited with code {0}".format(p.returncode))
+	sys.exit(2)
+else:
+	with open(os.path.join(source_dir, "{0}.expected".format(name)), "rt") as f:
+		expected = f.readlines()
+	actual = output.splitlines(1)
+	import difflib
+	print(''.join(difflib.unified_diff(expected, actual)))
+	if expected != actual:
+		sys.exit(1)

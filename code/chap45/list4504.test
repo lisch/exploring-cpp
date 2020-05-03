@@ -7,7 +7,7 @@ program, name, source_dir, build_dir = sys.argv
 def test(i, expect_success):
 	from subprocess import Popen,PIPE
 	import os
-	p = Popen([os.path.join(source_dir, name)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+	p = Popen([os.path.join(build_dir, name)], stdin=PIPE, stdout=PIPE, stderr=PIPE)
 	stdout, stderr = p.communicate("0 9 {0} 30 40".format(i).encode('utf-8'))
 	if stderr:
 		print(stderr, file=sys.stderr)

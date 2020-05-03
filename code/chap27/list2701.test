@@ -1,13 +1,21 @@
-#!/bin/sh
+#!/usr/bin/env python3
 # Expect the program to fail.
 
-name=$1
-source_dir=$2
-build_dir=$3
-output=`$build_dir/$name 2>&1`
-if [ $? -eq 0 ]; then
-	echo "$name exited with success, but expected failure"
-	false
-else
-	echo "$output" | diff -u "$source_dir/list2701.txt" -
-fi
+import os, sys
+program, name, source_dir, build_dir = sys.argv
+
+from subprocess import Popen,PIPE
+p = Popen([os.path.join(build_dir, name)], stdout=PIPE, stderr=PIPE)
+stdout, stderr = p.communicate()
+
+if p.returncode == 0:
+	print("$name exited with success, but expected failure")
+	sys.exit(2)
+else:
+	with open(os.path.join(source_dir, "list2701.txt"), 'rt') as f:
+		expected = f.readlines()
+	actual = (stdout + stderr).decode('utf-8').splitlines(1)
+	import difflib
+	print(''.join(difflib.unified_diff(expected, actual)))
+	if expected != actual:
+		sys.exit(1)

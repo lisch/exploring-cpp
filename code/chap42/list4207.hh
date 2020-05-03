@@ -1,11 +1,11 @@
 /** @file list4207.hh */
 /** Listing 42-7. The vital_stats Class to Record a Person’s Vital Statistics */
-export module stats;
-import <istream>;
-import <ostream>;
-export import <string>;
+// export module stats;
+#include <istream>
+#include <ostream>
+#include <string>
 
-export class vital_stats
+/*export*/ class vital_stats
 {
 public:
   inline vital_stats() : height_{0}, weight_{0}, bmi_{0}, sex_{'?'}, name_{}
