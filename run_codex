@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+
+"""
+Runs the codex program on the document associated with
+the current directory. The chapter number is extracted
+from the directory name and used to find the corresponding
+document two directories up.
+"""
+
+import os
+
+def find_codex():
+	codex_path = os.path.abspath("codex.xml")
+	while not os.path.exists(codex_path):
+		new_codex_path = os.path.abspath(os.path.join('..', os.path.relpath(codex_path)))
+		if codex_path == new_codex_path:
+			# Can't go up any more directories, so bail out.
+			# Force an OSError exception by trying to open
+			# codex.xml in the current directory.
+			with open('codex.xml'):
+				# Hey! It worked! Somehow the file was created
+				# just now. So return the file name.
+				codex_path = 'codex.xml'
+				break
+		codex_path = new_codex_path
+	return ['-f', codex_path]
+
+def find_document():
+	cwd = os.getcwd()
+	chapter_number = cwd[-2 : ]
+	from glob import glob
+	documents = glob("../../*{0}.odt".format(chapter_number))
+	if len(documents) == 1:
+		return documents
+	elif not documents:
+		raise ValueError("No matching documents for chapter number {0}".format(chapter_number))
+	else:
+		raise ValueError("Too many matching document names: {0}".format(documents))
+
+def default_arguments():
+	return find_codex() + find_document()
+
+def main(argv):
+	# If no command line arguments are passed to this script,
+	# determine the document name from the current directory
+	# name, and find the document. Look for a codex.xml file
+	# in the current directory or a parent directory.
+	if not argv:
+		argv = default_arguments()
+
+	os.spawnlp(os.P_WAIT, 'codex', ['codex'] + argv)
+	os.spawnlp(os.P_WAIT, '../../makecpp.py', ['makecpp.py'])
+
+if __name__ == "__main__":
+	import sys
+	main(sys.argv[1:])
