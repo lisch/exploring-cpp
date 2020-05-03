@@ -13,6 +13,11 @@ void print(long value)
   std::cout << "long=" << value << '\n';
 }
 
+void print(unsigned long value)
+{
+  std::cout << "unsigned long=" << value << '\n';
+}
+
 void print(long long value)
 {
   std::cout << "long long=" << value << '\n';

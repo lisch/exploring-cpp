@@ -35,7 +35,7 @@ int main()
     std::cout << "I picked " << computer_card << '\n';
 
     pick = deck.begin();
-    std::advance(pick, randomint{0, static_cast<randomint::result_type>(deck.size() - 1)}());
+    std::advance(pick, randomint{0, deck.size() - 1}());
     card user_card{*pick};
     deck.erase(pick);
 
