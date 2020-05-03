@@ -18,16 +18,19 @@ endif()
 # for each update to the book. So make it easy to set
 # a new prefix when it is known. Also, editors have been known
 # to switch file naming conventions mid-cycle.
-set(prefix "9781430261933_Ch" CACHE STRING "Base filename except for the chapter number, such as the ISBN followed by '_Ch'.")
+set(prefix "9781430261933_Ch" CACHE STRING
+	"Base filename except for the chapter number. Typically the ISBN followed by '_Ch'.")
 
 # Many of the listings and snippets have tests that are independent
-# of the book. The tests are my way to helping to ensure that the
+# of the book. The tests are my way to help ensure that the
 # code is more or less correct.
 enable_testing()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_EXTENSIONS False)
+
+set(DOCUMENT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Testing on Linux with clang++ and g++ prereleases.
 # Testing on Windows with Microsoft Visual C++ pending release of support for C++ 20.
@@ -44,102 +47,69 @@ else()
 endif()
 
 # Run a test.
-# All tests have the same form. A single input file and a single
-# file of expected output. The test runs the program, redirecting
-# input and piping output to diff. In order to test on Windows,
-# the command processor must be set to a compatible shell,
-# and GNU-compatible diff must be available. Recommendation is to
-# use a Linux Subsystem.
+# Tests have two forms: executable or text.
+# An executable test is just a shell script that is run with
+# the target name as the sole argument.
+# A text test is the name of a text file that is the expected
+# output that results when running ./${name}. The input
+# to the program is ${name}.input if the file exists or
+# /dev/null otherwise. The run_test script takes the name
+# of the test file as an argument, and performs the indicated test.
+#
+# In order to test on Windows, the command processor must be
+# set to a compatible shell, and compatible tools must be on the PATH.
+# Recommendation is to use a Linux Subsystem or cygwin.
 function(run_test name)
-  add_test(NAME test_${name} 
-    COMMAND /bin/sh -c "./${name} < ${name}.input | diff --color=always -u ${name}.expected -"
+  add_test(NAME test_${name}
+    COMMAND ${DOCUMENT_DIR}/run_test ${name}.test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
   )
   set_tests_properties(test_${name}
     PROPERTIES
-      REQUIRED_FILES "${name}.input;${name}.expected"
+      REQUIRED_FILES ${CMAKE_CURRENT_SOURCE_DIR}/${name}.test
     )
 endfunction(run_test)
 
-# Generate code listings from an Open Document Format (ODF) text file.
-# The codex program is a C++ program available on gitlab and github.
-# It uses a configuration file to guide how it locates and extracts
-# code listings from a document. This function performs the extraction
-# in a subdirectory, one per document, that is, one per chapter.
-#
-# Extracted files have the extension ".cc". The cmake dependency
-# is for files ending with ".cpp". The ".cpp" files are manually
-# created only for extracted ".cc" files that can be successfully
-# compiled. Some extracted files are not actually code, for example.
-# Some are riddled with errors for pedagogical purposes.
-# A few are headers only. Manually-created symbolic links assign
-# names to some headers so they can be used in other code listings.
-#
-# Most code listings are complete programs. Most of the one that
-# are not, are still meant to stand alone, and so a separate main()
-# is provided. The ".cpp" file uses #include "listNNNN.cc" and
-# possibly other #include directives as needed to compile successfully.
-#
-# Once listing files are successfully extracted, a marker file with
-# the extension ".codex" is created. If the document changes, cmake
-# knows to rerun codex to generate new listings. The codex tool
-# is smart enough not to touch a file if it has not changed,
-# so only listings that have changed will result in modified
-# source files for cmake to recompile.
-function(add_odt_target number docvar)
-	set(filename "${CMAKE_CURRENT_SOURCE_DIR}/${prefix}${number}.odt")
-	set(codexname "${CMAKE_CURRENT_SOURCE_DIR}/${prefix}${number}.codex")
-	set(target "chap${number}_codex")
-	set(dirname  "${CMAKE_CURRENT_SOURCE_DIR}/code/chap${number}")
-	set(confname "${CMAKE_CURRENT_SOURCE_DIR}/codex.xml")
-    if (EXISTS ${filename})
-        list(APPEND ${docvar} ${target})
-        list(LENGTH ${docvar} doclen)
-        set(${docvar} ${${docvar}} PARENT_SCOPE)
-        
-        add_custom_command(OUTPUT ${codexname}
-            COMMAND mkdir -p "${dirname}"
-            COMMAND cd ${dirname} && codex -f ${confname} ${filename}
-            COMMAND touch ${codexname}
-            MAIN_DEPENDENCY ${filename}
-            DEPENDENCIES ${filename} ${confname}
-            BYPRODUCTS "${CMAKE_CURRENT_SOURCE_DIR}/code/" "${dirname}/"
-            COMMENT "Running codex to extract listings from ${filename} into ${dirname}"
-        )
+# Every chapter's CMakeLists.txt file contains mostly a series of
+# example() functions calls, one per ".cpp" file.
+# The first argument to example() is the name, e.g., list0401.
+# Subsequent arguments can be additional dependencies or
+# compile options. Options that start with "-" are for UNIX,
+# and options that start with "/" are for Microsoft.
+# Other options must use target_compile_options().
+function(example name)
+	set(file_args)
+	set(option_args)
+	foreach(arg ${ARGN})
+		string(SUBSTRING ${arg} 0 1 first_char)
+		if("${first_char}" STREQUAL "/")
+			if(MSVC)
+				list(APPEND option_args ${arg})
+			endif()
+		elseif("${first_char}" STREQUAL "-")
+			if(UNIX)
+				list(APPEND option_args ${arg})
+			endif()
+		else()
+			list(APPEND file_args ${arg})
+		endif()
+	endforeach()
+    add_executable(${name} ${name}.cpp ${file_args})
+    target_compile_options(${name} PUBLIC ${option_args})
 
-        add_custom_target(${target} ALL DEPENDS ${codexname})
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${name}.test)
+        run_test(${name})
     endif()
 endfunction()
 
-# Every chapter's CMakeLists.txt file contains only a series of
-# example() functions calls, one per ".cpp" file.
-function(example name)
-    string(SUBSTRING ${name} 4 2 chapter_number)
-    set(codexname chap${chapter_number}_codex)
-
-    add_executable(${name} ${name}.cpp)
-    add_dependencies(${name}  ${codexname})
-    if(EXISTS ${name}.input AND EXISTS ${name}.expected)
-        run_test(${name})
-    endif()
+# Add a subdirectory if the document exists.
+function(chapter number)
+	set(DOCUMENT ${prefix}${number}.odt)
+	if(EXISTS "${DOCUMENT_DIR}/${DOCUMENT}")
+		message(DEBUG "Found ${DOCUMENT} searching chap${number}")
+		add_subdirectory(chap${number})
+	endif()
 endfunction()
 
 # All the individual chapter files are subdirectories of code/,
 # which helps manage the plethora of files.
 add_subdirectory(code)
-
-# Create a target for every chapter. I could not find any glob-type
-# functions in the Cmake documentation, but we know the format of
-# all the file names, so just run through all the possible numbers
-# and look for a matching ".odt" file.
-set(docs)
-foreach(number RANGE 1 89)
-    if(${number} LESS 10)
-        string(CONCAT chapter_number "0" ${number})
-	else()
-        string(CONCAT chapter_number ${number})
-    endif()
-    add_odt_target(${chapter_number} docs)
-endforeach()
-
-# For convenience, "make codex" runs the codex program on all documents.
-add_custom_target(codex ALL DEPENDS ${docs})
