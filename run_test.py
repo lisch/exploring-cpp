@@ -50,30 +50,33 @@ def is_exec(filename):
 			return (mode & stat.S_IXOTH) != 0
 
 		if os.name == 'nt':
-			with open(filename, 'rt') as f:
+			with open(filename, 'rb') as f:
 				return f.read(2) == '#!'
 
 		return False
 	except OSError:
 		return False
 
-from subprocess import check_call, Popen, PIPE
 if is_exec(test_path):
+	from subprocess import check_call
 	check_call(['python3', test_path, name, source_dir, build_dir])
 else:
 	if os.path.exists(input_path):
-		with open(input_path, 'rt') as f:
+		with open(input_path, 'rb') as f:
 			input_text = f.read()
 	else:
-		input_text = ''
+		input_text = b''
 
-	p = Popen([exe_path], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-	stdout, stderr = p.communicate(input_text)
-	actual = (stdout + stderr).decode('utf-8')
+	from subprocess import check_call, Popen, PIPE, STDOUT
+	p = Popen([exe_path], stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+	stdout, _ = p.communicate(input_text)
+	actual = stdout.splitlines(1)
 
-	with open(test_path, 'rt') as f:
+	with open(test_path, 'rb') as f:
 		expected = f.readlines()
 
 	if actual != expected:
-		print(''.join(difflib.unified_diff(expected, actual)))
+		import difflib
+		for line in difflib.diff_bytes(difflib.context_diff, expected, actual, b'Expected', b'Actual'):
+			sys.stdout.write(line.decode('latin1'))
 		sys.exit(1)

@@ -13,8 +13,8 @@ Listing 14-2 and 14-3 write to list140N.out.
 
 def run_program(path):
 	"Runs a program with no input and returns (stdout, stderr) tuple."
-	import subprocess
-	p = subprocess.Popen([path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	from subprocess import Popen,PIPE
+	p = Popen([path], stdout=PIPE, stderr=PIPE)
 	return p.communicate()
 
 def compare(expected, actual):
@@ -27,7 +27,8 @@ def compare(expected, actual):
 		return True
 	else:
 		import difflib
-		print(''.join(difflib.unified_diff(expected, actual)))
+		for line in difflib.diff_bytes(difflib.context_diff, expected, actual, b'Expected', b'Actual'):
+			sys.stdout.write(line.decode('latin1'))
 		return False
 
 def readlines(filename):
@@ -36,7 +37,7 @@ def readlines(filename):
 	Line endings are preserved.
 	Raises an exception for IOErrors.
 	"""
-	with open(filename, 'rt') as f:
+	with open(filename, 'rb') as f:
 		return f.readlines()
 
 def test(path, output_file, expected_output, expected_error):
@@ -49,23 +50,15 @@ def test(path, output_file, expected_output, expected_error):
 	that will contain the actual output after the program finishes.
 	"""
 	stdout, stderr = run_program(path)
-	if stdout is None:
-		stdout = ''
-	else:
-		stdout = stdout.decode('utf-8')
-	if stderr is None:
-		stderr = ''
-	else:
-		stderr = stderr.decode('utf-8')
 
 	# If there is unexpected error output, print the diff.
-	if not compare(expected_error, stderr.splitlines(0)):
+	if not compare(expected_error, stderr.splitlines(True)):
 		return False
 
 	if output_file:
 		actual_output = readlines(output_file)
 	else:
-		actual_output = stdout.splitlines(1)
+		actual_output = stdout.splitlines(True)
 	return compare(expected_output, actual_output)
 
 def main(name, source_dir, build_dir):
@@ -81,7 +74,7 @@ def main(name, source_dir, build_dir):
 	expected = []
 	input_file = os.path.join(source_dir, name + '.in')
 	for line in readlines(input_file):
-		expected.extend(['{0}\n'.format(int(token)) for token in line.split()])
+		expected.extend(['{0}\n'.format(int(token)).encode('latin1') for token in line.split()])
 
 	if source_dir != build_dir:
 		# Copy the input file into the build directory.
@@ -91,7 +84,7 @@ def main(name, source_dir, build_dir):
 	path = os.path.join(build_dir, name)
 	okay = test(path, output_file, expected, [])
 	os.chdir("/")
-	okay = test(path, None, [], [name + '.in: No such file or directory']) and okay
+	okay = test(path, None, [], [name.encode('latin1') + b'.in: No such file or directory\n']) and okay
 	return okay
 
 if __name__ == "__main__":
