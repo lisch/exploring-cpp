@@ -1,5 +1,5 @@
 example(list1201)
-example(list1202 "$<$<CXX_COMPILER_ID:AppleClang,ArmClang,Clang,XLClang>:-Wno-literal-conversion")
+example(list1202 "$<$<CXX_COMPILER_ID:AppleClang,ArmClang,Clang,XLClang>:-Wno-literal-conversion>")
 example(list1204)
 example(list1205)
 example(list1206)
