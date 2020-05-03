@@ -1,5 +1,4 @@
 // ... omitted for brevity ...
-private:
    int numerator_;
    int denominator_;
    void reduce() {}
