@@ -61,7 +61,7 @@ endif()
 # Recommendation is to use a Linux Subsystem or cygwin.
 function(run_test name)
   add_test(NAME test_${name}
-    COMMAND ${DOCUMENT_DIR}/run_test ${name}.test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND python3 ${DOCUMENT_DIR}/run_test.py ${name}.test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
   )
   set_tests_properties(test_${name}
     PROPERTIES
