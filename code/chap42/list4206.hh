@@ -1,9 +1,8 @@
 /** @file list4206.hh */
 /** Listing 42-6. Writing a Module Implementation */
-//module rat;
-#include "rat.hpp"
+module rat;
 #include <cassert>
-#include <numeric>
+import <numeric>;
 void rational::assign(int num, int den)
 {
   numerator_ = num;

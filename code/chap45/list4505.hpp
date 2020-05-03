@@ -9,7 +9,7 @@
 /*export*/ class randomint
 {
 public:
-  typedef std::default_random_engine::result_type result_type;
+  using result_type = int;
 
   /// Construct a random-number generator to produce numbers in the range [`low`, `high`].
   /// If @p low > @p high the values are reversed.

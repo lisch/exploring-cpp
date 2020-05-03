@@ -1,7 +1,7 @@
 /** @file list4205.hh */
 /** Listing 42-5. Defining the rational Class In a Module Interface */
-// export module rat;
-/*export*/ class rational
+export module rat;
+export class rational
 {
 public:
   inline rational(int num) : numerator_{num}, denominator_{1} {}

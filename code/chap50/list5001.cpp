@@ -120,7 +120,7 @@ int main()
   bool okay{false};
   try {
     fixed f6{1, -1};
-  } catch (std::invalid_argument const& ex) {
+  } catch (std::invalid_argument const&) {
     okay = true;
   } catch (...) {
   }
