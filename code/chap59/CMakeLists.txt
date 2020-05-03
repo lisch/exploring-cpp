@@ -1,7 +1,9 @@
 example(list5901 list5901.hh)
 example(list5902 list5902.hh)
 example(list5903 list5903.hh)
-example(snip5901 snip5901.hh -Wno-unused-variable /w44066)
+example(snip5901 snip5901.hh
+	"$<$<CXX_COMPILER_ID:GNU,Clang>:-Wno-unused-variable>"
+	"$<$<CXX_COMPILER_ID:MSVC>:/w44066>")
 example(snip5902 snip5902.hh)
 example(snip5903 snip5903.hh)
 example(snip5904 snip5904.hh)

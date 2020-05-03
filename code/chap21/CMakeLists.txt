@@ -1,4 +1,4 @@
-example(list2101 -Wno-unused-but-set-parameter)
+example(list2101 "$<$<CXX_COMPILER_ID:GNU>:-Wno-unused-but-set-parameter>")
 example(list2102)
 example(snip2101 snip2101.hh)
 example(snip2102 snip2102.hh)

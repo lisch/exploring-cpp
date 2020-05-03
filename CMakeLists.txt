@@ -18,7 +18,7 @@ endif()
 # for each update to the book. So make it easy to set
 # a new prefix when it is known. Also, editors have been known
 # to switch file naming conventions mid-cycle.
-set(prefix "9781430261933_Ch" CACHE STRING
+set(DOCUMENT_PREFIX "9781430261933_Ch" CACHE STRING
 	"Base filename except for the chapter number. Typically the ISBN followed by '_Ch'.")
 
 # Many of the listings and snippets have tests that are independent
@@ -73,22 +73,17 @@ endfunction(run_test)
 # example() functions calls, one per ".cpp" file.
 # The first argument to example() is the name, e.g., list0401.
 # Subsequent arguments can be additional dependencies or
-# compile options. Options that start with "-" are for UNIX,
-# and options that start with "/" are for Microsoft.
-# Other options must use target_compile_options().
+# compile options. Detect options as strings that begin
+# with "-" or "/". Generator expressions select options
+# on a per-compiler basis in each CMakeLists.txt file,
+# so also look for "$"
 function(example name)
 	set(file_args)
 	set(option_args)
 	foreach(arg ${ARGN})
-		string(SUBSTRING ${arg} 0 1 first_char)
-		if("${first_char}" STREQUAL "/")
-			if(MSVC)
-				list(APPEND option_args ${arg})
-			endif()
-		elseif("${first_char}" STREQUAL "-")
-			if(UNIX)
-				list(APPEND option_args ${arg})
-			endif()
+		string(SUBSTRING "${arg}" 0 1 first_char)
+		if(${first_char} STREQUAL "-" OR ${first_char} STREQUAL "/" OR ${first_char} STREQUAL "$")
+			list(APPEND option_args ${arg})
 		else()
 			list(APPEND file_args ${arg})
 		endif()
@@ -103,7 +98,7 @@ endfunction()
 
 # Add a subdirectory if the document exists.
 function(chapter number)
-	set(DOCUMENT ${prefix}${number}.odt)
+	set(DOCUMENT ${DOCUMENT_PREFIX}${number}.odt)
 	if(EXISTS "${DOCUMENT_DIR}/${DOCUMENT}")
 		message(DEBUG "Found ${DOCUMENT} searching chap${number}")
 		add_subdirectory(chap${number})
