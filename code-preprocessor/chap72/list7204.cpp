@@ -3,14 +3,14 @@
 #include <iostream>
 #include <string>
 
-void print(std::string const& str) { std::cout << str; }
-void print(int x)                  { std::cout << "int: " << x; }
-void print(double x)               { std::cout << "double: " << x; }
+void print(std::string_view str) { std::cout << str; }
+void print(int x)                { std::cout << "int: " << x; }
+void print(double x)             { std::cout << "double: " << x; }
 
 class base {
 public:
-  void print(std::string const& str) const { ::print(str); ::print("\n"); }
-  void print(std::string const& s1, std::string const& s2)
+  void print(std::string_view str) const { ::print(str); ::print("\n"); }
+  void print(std::string_view s1, std::string_view s2)
   {
     print(s1); print(s2);
   }

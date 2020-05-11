@@ -8,6 +8,6 @@ int main()
 
   std::wstring line{};
   while (std::getline(std::wcin, line))
-    if (is_palindrome(line))
+    if (is_palindrome(std::wstring_view{line}))
       std::wcout << line << L'\n';
 }

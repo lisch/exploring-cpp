@@ -9,6 +9,7 @@ int main()
 {
    while (std::cin)
    {
+      std::cout << "pi=" << pi << '\n';
       std::cout << "Radius=";
       double radius{};
       if (std::cin >> radius)

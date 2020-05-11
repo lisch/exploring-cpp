@@ -4,7 +4,7 @@
 #include <string_view>
 using namespace std::literals::string_view_literals;
 
-#include "list6805.hh"
+#include "list6806.hh"
 
 bool operator==(card a, card b) {
   return a.get_suit() == b.get_suit() and a.get_rank() == b.get_rank();

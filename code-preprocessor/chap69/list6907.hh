@@ -9,7 +9,7 @@
 class thing: public assignment_mixin<thing> {
 public:
    thing() : value_{} {}
-   thing(std::string&& s) : value_{std::move(s)} {}
+   thing(std::string s) : value_{std::move(s)} {}
    void swap(thing& other) { value_.swap(other.value_); }
    constexpr std::string const& str() const noexcept { return value_; }
 private:

@@ -1,6 +1,7 @@
 /** @file list6404.cpp */
 /** Listing 64-4. Examining Expression Categories */
 #include <iostream>
+#include <string>
 #include <utility>
 
 void print(std::string&& move)

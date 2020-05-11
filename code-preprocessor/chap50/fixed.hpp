@@ -2,7 +2,7 @@
  * @brief Fixed-point numbers.
  */
 /** @mainpage Project 2 - Fixed-Point Numbers
- * This program is Project 2 in <em>Exploring C++</em>,
+ * This program is Project 2 in <em>Exploring C++ 20</em>,
  * by Ray Lischner (Apress).
  *
  * Your task for Project 2 is to implement a simple fixed-point
@@ -36,7 +36,7 @@
 class fixed
 {
 public:
-  typedef int value_type;                    ///< Type of the actual value
+  using value_type = int;                        ///< Type of the actual value
 
   static int constexpr places = 4;               ///< number of decimal places
   static value_type constexpr places10 = 10000;  ///< 10<sup>places</sup>

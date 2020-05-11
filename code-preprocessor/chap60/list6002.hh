@@ -6,7 +6,7 @@
 #include <ostream>
 #include <stdexcept>
 
-void debug(std::string const& str)
+void debug(std::string_view str)
 {
    std::ofstream stream{"debug.txt", std::ios_base::out | std::ios_base::app};
    if (not stream)

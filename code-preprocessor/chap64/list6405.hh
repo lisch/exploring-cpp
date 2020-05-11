@@ -13,8 +13,8 @@
 public:
   using file_time_type = std::filesystem::file_time_type;
   artifact() : name_{}, mod_time_{file_time_type::min()}, vars_{} {}
-  artifact(std::string const& name)
-  : name_{name}, mod_time_{get_mod_time()}, vars_{}
+  artifact(std::string name)
+  : name_{std::move(name)}, mod_time_{get_mod_time()}, vars_{}
   {}
   artifact(artifact const&) = delete; // move-only
   artifact& operator=(artifact const&) = delete; // move-only

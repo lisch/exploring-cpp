@@ -1,7 +1,7 @@
 /** @file list6204.cpp */
 /** Listing 62-4. Second Draft, After Adding Modification Times to Artifacts */
-#include <algorithm>
 #include <cstdlib>
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <sstream>

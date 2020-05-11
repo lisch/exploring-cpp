@@ -11,8 +11,10 @@ int main()
 {
   fixed f1{};
   test_equal(f1.value(), 0);
+  test_equal(f1.to_string(), "0.0000");
   fixed f2{1};
   test_equal(f2.value(), 10000);
+  test_equal(f2.to_string(), "1.0000");
   fixed f3{3, 14162};
   test_equal(f3.value(), 31416);
   fixed f4{2, 14159265};

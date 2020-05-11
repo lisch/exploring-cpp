@@ -6,10 +6,6 @@
 #include <iostream>
 #include <tuple>
 
-// For internal use by the test() macro.
-// Turn the macro argument into a character string literal
-#define TEST_STRINGIFY(x) #x
-
 long long fail_count{0};
 
 /// Exit the program.
@@ -39,9 +35,9 @@ void print_stderr(Head&& head, Rest&&... rest)
 // For internal use by the test() macro.
 // Report a test failure.
 template<class... Args>
-inline void test_failed(char const* file, int line, Args&&... args)
+inline void test_failed(Args&&... args)
 {
-  std::cerr << file << ", line " << line << ": test failed: ";
+  std::cerr << "test failed: ";
   print_stderr(std::forward<Args>(args)...);
   std::cerr << std::endl;
   ++fail_count;
@@ -61,7 +57,7 @@ void test(T const& _condition_)
 {
   if (not static_cast<bool>(_condition_))
   {
-    test_failed(__FILE__, __LINE__, "FAIL Boolean test");
+    test_failed("FAIL Boolean test");
   }
 }
 
@@ -72,14 +68,14 @@ void test(T const& _condition_)
 ///
 /// See Boost.Test for a real test framework
 ///
-/// @param _expected_ A value to compare
 /// @param _actual_ A value to compare
-template<class E, class A>
-inline void test_equal(E const& expected, A const& actual)
+/// @param _expected_ A value to compare
+template<class A, class E>
+inline void test_equal(A const& actual, E const& expected)
 {
   if (expected != actual)
   {
-    test_failed(__FILE__, __LINE__, "FAIL Equality test\n"
+    test_failed("FAIL Equality test\n"
       "Expected: ", expected,
       "But got:  ", actual);
   }

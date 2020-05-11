@@ -203,7 +203,7 @@ counts["something"]                       1
 counts["the"]                             1
 counts[word]                              1
 counts{};                                 4
-counts—as                                 1
+counts—as                               1
 cultures).                                1
 customarily                               1
 data                                      2
@@ -448,8 +448,8 @@ problem.                                  2
 program                                  10
 program,                                  3
 program.                                  1
-program—collecting                        1
-program—something                         1
+program—collecting                      1
+program—something                       1
 provide                                   2
 pseudo-code                               1
 punctuation                               1
@@ -486,7 +486,7 @@ shown                                     2
 simple                                    1
 simple,                                   1
 simplest                                  1
-simple—and                                1
+simple—and                              1
 simplicity,                               2
 simply                                    3
 single                                    1

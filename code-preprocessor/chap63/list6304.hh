@@ -5,6 +5,7 @@
 #include <iterator>
 #include <ranges>
 #include <regex>
+#include <string>
 #include <vector>
 
 #include "artifact.hpp"

@@ -14,7 +14,11 @@ if p.returncode == 0:
 else:
 	with open(os.path.join(source_dir, "list2701.txt"), 'rb') as f:
 		expected = f.readlines()
-	actual = stdout.splitlines(True)
+	# The assertion contains the full path to the source file.
+	# Normalize by replacing with SOURCE.
+	source_dir = os.path.abspath(source_dir).encode('utf-8')
+	actual = [line.replace(source_dir, b"SOURCE") for line in stdout.splitlines(True)]
+
 	if expected != actual:
 		import difflib
 		for line in difflib.diff_bytes(difflib.unified_diff, expected, actual, b'Expected', b'Actual'):

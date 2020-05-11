@@ -1,7 +1,7 @@
 /** @file list6202.cpp */
 /** Listing 62-2. First Draft of the Pseudo-make Program */
-#include <algorithm>
 #include <cstdlib>
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <sstream>

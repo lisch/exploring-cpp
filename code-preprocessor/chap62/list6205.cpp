@@ -1,7 +1,7 @@
 /** @file list6205.cpp */
 /** Listing 62-5. Storing Pointers in the Dependency Graph */
-#include <algorithm>
 #include <cstdlib>
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <map>

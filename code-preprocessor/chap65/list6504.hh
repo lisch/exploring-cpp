@@ -15,8 +15,8 @@ class artifact_impl
 public:
   using file_time_type = std::filesystem::file_time_type;
   artifact_impl() : name_{}, mod_time_{file_time_type::min()}, vars_{} {}
-  artifact_impl(std::string const& name)
-  : name_{name}, mod_time_{get_mod_time()}, vars_{}
+  artifact_impl(std::string name)
+  : name_{std::move(name)}, mod_time_{get_mod_time()}, vars_{}
   {}
 
   std::string const& name() const { return name_; }
@@ -58,8 +58,8 @@ private:
 
 artifact::artifact() : pimpl_{std::make_shared<artifact_impl>()} {}
 
-artifact::artifact(std::string const& name)
-: pimpl_(std::make_shared<artifact_impl>(name))
+artifact::artifact(std::string name)
+: pimpl_(std::make_shared<artifact_impl>(std::move(name)))
 {}
 
 std::string const& artifact::name()

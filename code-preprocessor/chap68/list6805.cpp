@@ -1,32 +1,15 @@
-#include <algorithm>
+#include <cassert>
 #include <iostream>
-#include <vector>
-
-#include "card.hpp"
-#include "randomint.hpp"
+#include "rational.hpp"
+#include "list6805.hh"
 
 int main()
 {
-  std::vector<card> deck(52);
-  std::ranges::generate(deck, card_generator{});
-
-  for (int i{0}; i != 10; ++i)
-  {
-    auto pick{deck.begin() + randomint{0, deck.size()-1}()};
-    card computer_card{*pick};
-    deck.erase(pick);
-
-    std::cout << "I picked " << computer_card << '\n';
-
-    pick = deck.begin() + randomint{0, deck.size() - 1}();
-    card user_card{*pick};
-    deck.erase(pick);
-
-    std::cout << "You picked " << user_card << '\n';
-
-    if (acehigh_less(computer_card, user_card))
-      std::cout << "You win.\n";
-    else
-      std::cout << "I win.\n";
-  }
+  rational<int> r1{1,2};
+  rational<int> r2{1,3};
+  assert(std::strong_ordering::greater == (r1 <=> r2));
+  assert(std::strong_ordering::equal == (r1 <=> r1));
+  assert(std::strong_ordering::less == (r2 <=> r1));
+  assert(r2 < r1);
+  assert(not(r1 < r2));
 }

@@ -6,7 +6,7 @@
 
 class visible {
 public:
-    visible(std::string&& msg) : msg_{std::move(msg)} { std::cout << msg_ << '\n'; }
+    visible(std::string msg) : msg_{std::move(msg)} { std::cout << msg_ << '\n'; }
     std::string const& msg() const { return msg_; }
 private:
     std::string msg_;

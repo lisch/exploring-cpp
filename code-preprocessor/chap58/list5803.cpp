@@ -1,6 +1,6 @@
 /** @file list5803.cpp */
 /** Listing 58-3. Caching the ctype Facet */
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <locale>
 
@@ -11,8 +11,7 @@ void print(int c, std::string const& name, std::locale loc)
   // Don't concern yourself with the & operator. I'll cover that later
   // in the book. Its purpose is just to ensure the character's escape
   // code is printed correctly.
-  std::cout << "\\x" << std::setw(2) << (c & 0xff) <<
-               " is " << name << " in " << loc.name() << '\n';
+  std::cout << std::format("\\x{:02x} is {} in {}\n", c & 0xff, name, loc.name());
 }
 
 /// Test a character's categorization in the locale, @p loc.
@@ -22,7 +21,6 @@ void test(char c, std::locale loc)
 
   std::ctype<char> const& ctype{std::use_facet<std::ctype<char>>(loc)};
 
-  std::cout << std::hex << std::setfill('0');
   if (ctype.is(std::ctype_base::alnum, c))
     print(c, "alphanumeric", loc);
   else if (ctype.is(std::ctype_base::cntrl, c))

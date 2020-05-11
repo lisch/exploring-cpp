@@ -12,7 +12,7 @@ class artifact_impl;
 public:
   using file_time_type = std::filesystem::file_time_type;
   artifact();
-  artifact(std::string const& name);
+  artifact(std::string name);
   artifact(artifact const&) = default;
   artifact(artifact&&) = default;
   artifact& operator=(artifact const&) = default;

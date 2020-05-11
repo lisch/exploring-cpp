@@ -1,10 +1,10 @@
 /** @file list6708.cpp */
 /** Listing 67-8. Exploring How Negative and Unsigned Values Are Shifted */
 #include <iostream>
-#include <string>
+#include <string_view>
 
 template<class T>
-void print(std::string const& label, T value)
+void print(std::string_view label, T value)
 {
    std::cout << label << " = ";
    std::cout << std::dec << value << " = ";

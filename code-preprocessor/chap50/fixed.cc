@@ -1,6 +1,8 @@
 #include <cassert>
+#include <cmath>
 #include <cstdlib>
-#include <iomanip>
+
+#include <format>
 #include <iostream>
 #include <locale>
 #include <sstream>
@@ -120,10 +122,7 @@ const
 std::string fixed::to_string()
 const
 {
-  std::ostringstream out{};
-  out << integer() << '.'
-      << std::setfill('0') << std::setw(places) << fraction();
-  return out.str();
+  return std::format("{0}.{1:0{2}}", integer(), fraction(), places);
 }
 
 fixed& fixed::operator+=(fixed f)

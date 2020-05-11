@@ -49,7 +49,7 @@ void count_down(int n)
   }
   catch (visual ex)
   {
-    ex.print("catch ");
+    ex.print("catch on line 50 ");
     throw;
   }
   std::cout << "end count_down(" << n << ")\n";
@@ -60,11 +60,12 @@ int main()
   try
   {
     count_down(2);
+    std::cout << "--------------------\n";
     count_down(4);
   }
   catch (visual const ex)
   {
-    ex.print("catch ");
+    ex.print("catch on line 66 ");
   }
   std::cout << "All done!\n";
 }

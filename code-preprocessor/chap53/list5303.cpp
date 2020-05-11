@@ -4,13 +4,14 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <string_view>
 
 class person {
 public:
    person() : name_{}, address_{}, phone_{} {}
-   person(std::string const& name,
-          std::string const& address,
-          std::string const& phone)
+   person(std::string_view name,
+          std::string_view address,
+          std::string_view phone)
    : name_{name}, address_{address}, phone_{phone}
    {}
    std::string const& name()    const { return name_; }

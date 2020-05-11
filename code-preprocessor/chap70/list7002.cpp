@@ -4,11 +4,11 @@
 #include <iostream>
 #include <iterator>
 #include <list>
-#include <string>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 
-void trace(std::string const& msg)
+void trace(std::string_view msg)
 {
    std::cout << msg << '\n';
 }

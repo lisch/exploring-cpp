@@ -5,6 +5,7 @@
 #include <locale>
 #include <ranges>
 #include <string>
+#include <string_view>
 
 /** Determine whether @p str is a palindrome.
  * Only letter characters are tested. Spaces and punctuation don't count.

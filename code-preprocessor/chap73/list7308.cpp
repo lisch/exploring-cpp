@@ -1,6 +1,6 @@
 #include <type_traits>
 #include "list7308.hh"
-#include "list7307.hh"
+#include "list7307.hpp"
 
 int main() {
 	static_assert(std::is_same<int, promote<bool>::type>::value);

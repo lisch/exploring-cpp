@@ -2,7 +2,6 @@
 /** Listing 67-15. Example of Using std::bitset */
 #include <bitset>
 #include <iostream>
-#include <string>
 
 /** Find the first 1 bit in a bitset, starting from the most significant bit.
  * @param bitset The bitset to examine
@@ -20,7 +19,7 @@ std::size_t first(std::bitset<N> const& bitset)
 
 int main()
 {
-   std::bitset<50> lots_o_bits{std::string{"1011011101111011111011111101111111"}};
+   std::bitset<50> lots_o_bits{"1011011101111011111011111101111111"};
    std::cout << "bitset: " << lots_o_bits << '\n';
    std::cout << "first 1 bit: " << first(lots_o_bits) << '\n';
    std::cout << "count of 1 bits: " << lots_o_bits.count() << '\n';

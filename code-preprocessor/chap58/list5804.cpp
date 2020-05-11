@@ -1,11 +1,12 @@
 /** @file list5804.cpp */
 /** Listing 58-4. Counting Words Again, This Time with Cached Facets */
-#include <iomanip>
+#include <format>
 #include <iostream>
 #include <locale>
 #include <map>
 #include <ranges>
 #include <string>
+#include <string_view>
 
 using count_map  = std::map<std::string, int>;  ///< Map words to counts
 using count_pair = count_map::value_type;       ///< pair of a word and a count
@@ -51,8 +52,7 @@ str_size get_longest_key(count_map const& map)
 void print_pair(count_pair const& pair, str_size longest)
 {
   int constexpr count_size{10}; // Number of places for printing the count
-  std::cout << std::setw(longest)    << std::left  << pair.first <<
-               std::setw(count_size) << std::right << pair.second << '\n';
+  std::cout << std::format("{0:{1}} {2:{3}}\n", pair.first, longest, pair.second, count_size);
 }
 
 void print_counts(count_map const& counts)

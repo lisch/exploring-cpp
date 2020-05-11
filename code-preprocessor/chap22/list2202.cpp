@@ -5,6 +5,7 @@
 #include <locale>
 #include <map>
 #include <string>
+#include <string_view>
 
 using count_map  = std::map<std::string, int>;  ///< Map words to counts
 using count_pair = count_map::value_type;       ///< pair of a word and a count

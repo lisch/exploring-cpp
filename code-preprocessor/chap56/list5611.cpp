@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace parser
@@ -12,8 +13,8 @@ namespace parser
   {
   public:
     token() : text_{} {}
-    token(std::string& s) : text_{s} {}
-    token& operator=(std::string const& s) { text_ = s; return *this; }
+    token(std::string_view s) : text_{s} {}
+    token& operator=(std::string_view s) { text_ = s; return *this; }
     std::string text() const { return text_; }
   private:
     std::string text_;

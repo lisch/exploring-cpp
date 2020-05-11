@@ -19,7 +19,7 @@
  * This program reads lines of text from the standard input and echoes
  * to the standard output those lines that are palindromes.
  *
- * Source file: [palindrome.cpp](palindrome.cpp)
+ * Source file: list2801.cpp
  *
  * @date 27-March-2020
  * @author Ray Lischner

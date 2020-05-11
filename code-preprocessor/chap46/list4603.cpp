@@ -1,5 +1,5 @@
 /** @file list4603.cpp */
-/** Listing 46-3. Deomstrating Iterator Member Types */
+/** Listing 46-3. Demonstrating Iterator Member Types */
 #include <iostream>
 #include <string>
 #include <vector>

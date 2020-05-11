@@ -1,7 +1,7 @@
 /** @file
  * @brief Compute body-mass index.
  */
-/** @mainpage Project 1 - Body-Mass Index
+/** @mainpage Project 1 - Bogus Metabolic Indicator
  * This program is Project 1 in <em>Exploring C++ 20</em>,
  * by Ray Lischner (Apress).
  *
@@ -31,7 +31,7 @@
  * Compute the mean and median BMI values as floating-point numbers,
  * and print the mean with one place after the decimal point.
  *
- * Body-mass index is defined as weight in kg/(height in m)<sup>2</sup>,
+ * BMI is defined as weight in kg/(height in m)<sup>2</sup>,
  * converted to a unitless number.
  *
  * Source file:
@@ -85,9 +85,9 @@ bool get_record(std::vector<std::string>& names,
                 std::vector<char>& sexes)
 {
    std::string name;
-   int height(0);
-   int weight(0);
-   char sex('?');
+   int height{0};
+   int weight{0};
+   char sex{'?'};
 
   std::cout << "Name " << names.size()+1 << ": ";
   if (not std::getline(std::cin, name))
@@ -95,8 +95,8 @@ bool get_record(std::vector<std::string>& names,
 
   // Enforce minimal sanity check on the height, which must be
   // between 10 and 300 cm, or baby- to giant-size.
-  int const min_height(10);
-  int const max_height(300);
+  int const min_height{10};
+  int const max_height{300};
   std::cout << "Height (cm): ";
   if (not (std::cin >> height))
     return false;
@@ -109,8 +109,8 @@ bool get_record(std::vector<std::string>& names,
 
   // Enforce minimal sanity check on the weight, which must
   // be between premature-baby and giant size.
-  const int min_weight(1);
-  const int max_weight(500);
+  const int min_weight{1};
+  const int max_weight{500};
   std::cout << "Weight (kg): ";
   if (not (std::cin >> weight))
     return false;
@@ -121,14 +121,14 @@ bool get_record(std::vector<std::string>& names,
     return false;
   }
 
-  std::cout << "Sex (M or F): ";
+  std::cout << "Sex (M, F, etc.): ";
   if (not (std::cin >> sex))
     return false;
   skip_line();
   sex = std::toupper(sex, std::locale{});
-  if (sex != 'M' and sex != 'F')
+  if (not std::isalpha(sex, std::locale{}))
   {
-    std::cout << "Invalid sex. Aborting.\n";
+    std::cout << "Invalid sex. Must be a letter. Aborting.\n";
     return false;
   }
 
@@ -165,8 +165,8 @@ void print_table(char sex,
 {
   std::cout << "Ht(cm) Wt(kg) Sex  BMI  Name\n";
 
-  float bmi_sum(0);
-  long int bmi_count(0);
+  float bmi_sum{0};
+  long int bmi_count{0};
   std::vector<int> tmpbmis; // store only the BMIs that are printed
                             // to compute the median
   for (std::vector<int>::size_type i(0); i != heights.size(); ++i)
@@ -187,9 +187,7 @@ void print_table(char sex,
   // If the vectors are not empty, print basic statistics.
   if (bmi_count != 0)
   {
-    std::cout << "Mean BMI = "
-              << std::setprecision(1) << std::fixed << bmi_sum / bmi_count
-              << '\n';
+    std::cout << std::format("Mean BMI = {:.1f}\n", bmi_sum / bmi_count);
 
     // Median BMI is trickier. The easy way is to sort the
     // array and pick out the middle item or items.

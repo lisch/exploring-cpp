@@ -1,6 +1,7 @@
 /** @file list6017.hh */
 /** Listing 60-17. Calling the Complicated Version of to_string */
 #include <iostream>
+#include <string>
 #include "to_string.hpp"
 
 int main()
