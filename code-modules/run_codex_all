@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for dir in chap??/; do
+	(cd ${dir}; ../../run_codex || exit 1)
+done
